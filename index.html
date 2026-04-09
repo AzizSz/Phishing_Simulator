@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhishGuard — Social Engineering Simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HOME SCREEN -->
+<div id="screen-home" class="screen active">
+  <div class="home-bg">
+    <div class="grid-lines"></div>
+    <div class="scanline"></div>
+  </div>
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 1.5L2 5v6c0 4.5 3.3 8.7 8 10 4.7-1.3 8-5.5 8-10V5L10 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 10l2.5 2.5L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      PhishGuard
+    </div>
+    <div class="nav-tag">Security Awareness Training</div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <span class="dot-pulse"></span>
+      Live simulation
+    </div>
+    <h1 class="hero-title">Can you spot<br>the attack?</h1>
+    <p class="hero-sub">Experience real phishing emails, scam chats, and impersonation attacks. Make decisions and learn how each attack works — before it happens to you for real.</p>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">10</div>
+        <div class="stat-label">Scenarios</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Attack types</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num">~5</div>
+        <div class="stat-label">Minutes</div>
+      </div>
+    </div>
+
+    <div class="attack-types">
+      <div class="attack-pill phishing">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 2h8v7a1 1 0 01-1 1H3a1 1 0 01-1-1V2z" stroke="currentColor" stroke-width="1.2"/><path d="M2 2l4 3.5L10 2" stroke="currentColor" stroke-width="1.2"/></svg>
+        Phishing
+      </div>
+      <div class="attack-pill scam">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1l1.5 3 3.5.5-2.5 2.5.5 3.5L6 9l-3 1.5.5-3.5L1 4.5 4.5 4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Scam
+      </div>
+      <div class="attack-pill impersonation">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="4" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 10.5c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Impersonation
+      </div>
+    </div>
+
+    <button class="btn-start" onclick="startGame()">
+      <span>Start simulation</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="home-footer">
+    <span>Built for cybersecurity awareness training</span>
+  </div>
+</div>
+
+<!-- SIMULATION SCREEN -->
+<div id="screen-sim" class="screen">
+  <div class="sim-header">
+    <button class="btn-back" onclick="goHome()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <div class="progress-area">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">1 / 10</div>
+    </div>
+    <div class="score-badge">
+      Score: <span id="live-score">0</span>
+    </div>
+  </div>
+
+  <div class="sim-body" id="sim-body">
+    <div class="scenario-meta">
+      <span class="scenario-number" id="scenario-number">Scenario 01</span>
+      <span class="attack-tag" id="attack-tag">Phishing</span>
+    </div>
+    <div id="scenario-ui"></div>
+    <div class="choices-section" id="choices-section">
+      <div class="choices-prompt">What do you do?</div>
+      <div class="choices-list" id="choices-list"></div>
+    </div>
+    <div id="feedback-panel"></div>
+    <div class="next-wrap" id="next-wrap" style="display:none">
+      <button class="btn-next" id="btn-next" onclick="nextScenario()">
+        Next scenario
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="screen-results" class="screen">
+  <div class="results-wrap">
+    <div class="results-card">
+      <div class="results-top">
+        <div class="trophy-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 4L10 8v8c0 6.5 4.5 12.5 8 14 3.5-1.5 8-7.5 8-14V8L18 4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13 17l3.5 3.5L23 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h2 id="result-title">Well done!</h2>
+        <p id="result-msg">You completed the simulation.</p>
+      </div>
+      <div class="score-display">
+        <div class="score-big" id="final-score">0</div>
+        <div class="score-out">out of 10</div>
+      </div>
+      <div class="result-stats">
+        <div class="rstat correct-stat">
+          <div class="rstat-num" id="r-correct">0</div>
+          <div class="rstat-label">Correct</div>
+        </div>
+        <div class="rstat wrong-stat">
+          <div class="rstat-num" id="r-wrong">0</div>
+          <div class="rstat-label">Wrong</div>
+        </div>
+        <div class="rstat pct-stat">
+          <div class="rstat-num" id="r-pct">0%</div>
+          <div class="rstat-label">Accuracy</div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-retry" onclick="startGame()">Try again</button>
+        <button class="btn-home" onclick="goHome()">Back to home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="scenarios.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
