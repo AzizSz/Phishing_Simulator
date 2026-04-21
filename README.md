@@ -15,13 +15,16 @@ The goal is to build real-world security awareness by letting users experience a
 
 ## How to Run
 
-No installation or server required.
+How to Run
 
+**Option 1 — Live (recommended):** Visit https://azizsz.github.io/Phishing_Simulator/ directly in any browser.
+
+**Option 2 — Local:**
 1. Download or clone this repository
 2. Open `index.html` in any modern web browser (Chrome, Firefox, Edge, Safari)
 3. Click **Start Simulation** to begin
 
-That's it — the app runs entirely in the browser with no backend or dependencies.
+The app runs entirely in the browser with no backend or dependencies.
 
 ---
 
